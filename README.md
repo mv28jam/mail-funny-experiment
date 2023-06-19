@@ -30,7 +30,7 @@ Output: _Processed 80847 in **02:43:49** Bad 2018 Failed 775_
  - php ./run.php
 
 ### Run with test mok
-- php ./run test <count of mails to send> 
+- php ./run test 100
 
 ### TO check
 - minimal php-build = **SUCCESS** up to 3 times faster (without mem limit)
