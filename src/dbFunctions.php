@@ -14,7 +14,7 @@ function getCon(): PDO
  * @return array
  *
  * NOTE ---
- * IF email is not unique and there is no "valid" check when inserted, we can join valid mail
+ * IF email is not unique and there is no "valid" already check when inserted, we can join valid mail
  * to user with other login (have to check!)
  * query assumption ! very slow (
 SELECT one.username, one.email, (MAX(one.valid) OR MAX(one.confirmed) OR MAX(two.valid) OR MAX(two.confirmed)) as checked
