@@ -8,7 +8,7 @@ function getTestData(int $quan): array
         $res[$i] = [
             'username' => (string)$i,
             'email' => $i.'@example.com',
-            'checked' => ((mt_rand(0,99) < 75 ? 1 : 0))
+            'checked' => ((mt_rand(0,99) < 75 ? 0 : 1))
         ];
     }
     //

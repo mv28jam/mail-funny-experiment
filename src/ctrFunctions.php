@@ -4,11 +4,29 @@
  */
 
 /**
+ * Count processes with our marker
  * @return int
  */
 function getMyProcessCount(): int
 {
     return (int)shell_exec('ps aux | grep '.PROC_MARKER.' | wc -l');
+}
+
+/**
+ * Get sum of used memory with our marker by ps
+ * php memory_get_usage() show memory allocated by script except php itself and libs = not real
+ * @return int
+ */
+function getMyProcessMemUsage() : int
+{
+    $control = 0;
+    //min value > 0
+    // we grep our grep with our marker
+    foreach (explode(PHP_EOL, shell_exec('ps aux | grep '.PROC_MARKER)) as $val){
+        $tmp = array_values(array_filter(explode(' ', $val)));
+        if(!empty($tmp[5])) $control += $tmp[5];
+    }
+    return intval($control / 1024);
 }
 
 /**
@@ -25,14 +43,33 @@ function checkMyPid($pid): int
  * @param callable $log
  * @return void
  */
-function loadWait(int $i, callable $log)
+function loadWait(int $i, callable $log): void
 {
     //
-    if($i % 500 == 0 and (!laControl($log) or !pidCapturedControl($log))){
+    if($i % 16 == 0 and (!laControl($log) or !memoryControl($log) or !pidCapturedControl($log))){
         user_error('Can not perform mail sending by this server with current params', E_USER_ERROR);
     }
 }
 
+
+function memoryControl(Callable $log) : bool
+{
+    $control = 0;
+    $to_sleep = 2;
+    //
+    while (getMyProcessMemUsage() >= MEMORY_USE_MB) {
+        if($control > WAIT_LIMIT_SEC/2) $log('Long memory free waiting was.');
+        sleep($to_sleep);
+        $control += $to_sleep;
+        if ($control > WAIT_LIMIT_SEC) {
+            $log('Memory usage is too hi for '.WAIT_LIMIT_SEC.' seconds.');
+            return false;
+        }
+    }
+    //
+    return true;
+
+}
 
 /**
  *
@@ -45,7 +82,6 @@ function laControl(Callable $log): bool
     $to_sleep = 2;
     //
     while (sys_getloadavg()[0] >= LA_CUT) {
-        echo '.';
         if($control > WAIT_LIMIT_SEC/2) $log('Long LA cut waiting was.');
         sleep($to_sleep);
         $control += $to_sleep;
@@ -69,7 +105,6 @@ function pidCapturedControl(Callable $log): bool
     $pid_captured = getMyProcessCount();
     //
     while($pid_captured >= PID_CUT){
-        echo '!';
         if($control > WAIT_LIMIT_SEC/2) $log('Long wait of lowering PID cut limit was.');
         sleep($to_sleep);
         $control += $to_sleep;
