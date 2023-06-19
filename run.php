@@ -53,14 +53,19 @@ if(TEST){
 $count = count($data);
 
 /**
- * actions
+ * Check for mail to send multiprocess
  */
 $bad_mails = checkActionsIter($data, $log, $pid);
-//set bad mails in db
+/**
+ * Save result of check
+ */
 if(!TEST){
     setCheckAndNotValidForMails($data, $bad_mails);
 }
-//
+/**
+ * Send checked and valid mails
+ */
 $fail_sends = sendActionsIter(newListForm($data, $bad_mails), $log, $pid);
-//
+
+//echo res for me
 echo 'Sent '.$count.' in '.gmdate("H:i:s",(microtime(true) - $s_time)).' Bad '.count($bad_mails).' Failed '.count($fail_sends)."\n";

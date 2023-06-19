@@ -6,7 +6,7 @@
  */
 function getCon(): PDO
 {
-    return new PDO('mysql:host=localhost;port=3306;dbname=test', 'root', 'vertrigo');
+    return new PDO('mysql:host=localhost;port=3306;dbname=test', '', '');
 }
 
 /**

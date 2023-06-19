@@ -40,7 +40,12 @@ function checkMyPid($pid): int
 }
 
 /**
- *
+ * Check for load params
+ * - memory
+ * - la
+ * - count of processes
+ * sleep if overlooad
+ * 16 is not calculated scale
  * @param int $i
  * @param callable $log
  * @return void
@@ -53,7 +58,12 @@ function loadWait(int $i, callable $log): void
     }
 }
 
-
+/**
+ * Check memory usage by process of mail sending
+ * and sleep for 2 sec if more than configurated
+ * @param callable $log
+ * @return bool
+ */
 function memoryControl(Callable $log) : bool
 {
     $control = 0;
@@ -74,7 +84,8 @@ function memoryControl(Callable $log) : bool
 }
 
 /**
- *
+ * Check for LA overload
+ * Sleep for 2 sec if more than configurated
  * @param callable $log
  * @return bool
  */
@@ -95,8 +106,10 @@ function laControl(Callable $log): bool
     //
     return true;
 }
+
 /**
- *
+ * Check for processes count of mailing - too many is bad
+ * Sleep for 2 sec if more than configurated
  * @param callable $log
  * @return bool
  */
