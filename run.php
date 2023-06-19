@@ -68,4 +68,4 @@ if(!TEST){
 $fail_sends = sendActionsIter(newListForm($data, $bad_mails), $log, $pid);
 
 //echo res for me
-echo 'To send '.$count.' in '.gmdate("H:i:s",(microtime(true) - $s_time)).' Bad '.count($bad_mails).' Failed '.count($fail_sends)."\n";
+echo 'Processed '.$count.' in '.gmdate("H:i:s",(microtime(true) - $s_time)).' Bad '.count($bad_mails).' Failed '.count($fail_sends)."\n";
