@@ -9,18 +9,17 @@ Have to check 75%
 
 So in one process...  
 Send: 5 000 000 * 20 % / 30 days * 2 times * 5 sec avg  = 92 hours  
-Check email: 5 000 000 * 20 % / 30 days * 75% * 30 sec avg = 208 hours (no checks before)  
-(Why do we have to check?!)
+Check email: 5 000 000 * 20 % / 30 days * 75% * 30 sec avg = 208 hours (no checks before)
 
 = 300 hours... one mailing by ONE process
 
 ### Check script for multi process by exec (I wanted to check for a long time)
 4 core, 8 GB RAM, LA > 1, Ubuntu 22 desktop, php8.1    
 Limits: 3Gb RAM, LA 3.6  
-Working with DB
+Working with DB test
 
 80 847 "checked"   
-80 072 "sent"  
+78 829 "sent"  
 
 Output: _Processed 80847 in **02:43:49** Bad 2018 Failed 775_  
 
