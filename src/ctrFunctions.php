@@ -30,6 +30,7 @@ function getMyProcessMemUsage() : int
 }
 
 /**
+ * Check my pid with my marker exists
  * @param $pid
  * @return int
  */
@@ -39,6 +40,7 @@ function checkMyPid($pid): int
 }
 
 /**
+ *
  * @param int $i
  * @param callable $log
  * @return void
